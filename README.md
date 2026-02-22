@@ -1,7 +1,11 @@
-# jp-engine_audio
+# hajimu_engine_audio
 
-**はじむ言語**用オーディオプラグイン。  
-[miniaudio](https://miniaud.io/) をバックエンドに使用した BGM (ストリーミング) と SE (インメモリ) 再生。
+> **はじむ言語**向け BGM + SE オーディオプラグイン
+
+[miniaudio](https://miniaud.io/) をバックエンドに使用したシングルヘッダーオーディオエンジンです。  
+BGM ストリーミングと SE インメモリ再生を両立します。
+
+---
 
 ## 機能
 
@@ -20,9 +24,12 @@
 ## ビルド
 
 ```bash
+git clone https://github.com/ReoShiozawa/hajimu_engine_audio.git
+cd hajimu_engine_audio
+
 make vendor   # miniaudio.h をダウンロード
-make          # build/engine_audio.hjp が生成される
-make install  # ~/.hajimu/plugins/engine_audio/
+make          # → build/engine_audio.hjp
+make install  # → ~/.hajimu/plugins/engine_audio/
 ```
 
 ## クイックスタート
@@ -94,6 +101,12 @@ SE再生(効果音)
 |---|---|
 | BGM スロット | 16 |
 | SE スロット | 64 |
+
+## サンプル
+
+- [examples/](examples/) — BGM ループ再生、SE 多重再生デモ
+
+---
 
 ## ライセンス
 
