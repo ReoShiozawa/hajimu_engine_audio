@@ -180,6 +180,14 @@ void eng_se_set_pitch(ENG_Audio* a, ENG_SoundID id, float pitch) {
     SoundSlot* s = se_slot(a, id);
     if (s) ma_sound_set_pitch(&s->sound, pitch);
 }
+void eng_se_set_loop(ENG_Audio* a, ENG_SoundID id, bool loop) {
+    SoundSlot* s = se_slot(a, id);
+    if (s) ma_sound_set_looping(&s->sound, loop ? MA_TRUE : MA_FALSE);
+}
+bool eng_se_is_playing(ENG_Audio* a, ENG_SoundID id) {
+    SoundSlot* s = se_slot(a, id);
+    return s && ma_sound_is_playing(&s->sound);
+}
 void eng_se_free(ENG_Audio* a, ENG_SoundID id) {
     SoundSlot* s = se_slot(a, id);
     if (s) { ma_sound_uninit(&s->sound); memset(s, 0, sizeof(*s)); }
@@ -245,4 +253,10 @@ float eng_bgm_duration(ENG_Audio* a, ENG_SoundID id) {
     float len = 0.0f;
     ma_sound_get_length_in_seconds(&s->sound, &len);
     return len;
+}
+
+/* ── BGM ピッチ ──────────────────────────────────────────*/
+void eng_bgm_set_pitch(ENG_Audio* a, ENG_SoundID id, float pitch) {
+    SoundSlot* s = bgm_slot(a, id);
+    if (s) ma_sound_set_pitch(&s->sound, pitch);
 }

@@ -81,6 +81,12 @@ void eng_se_set_volume(ENG_Audio* a, ENG_SoundID id, float vol);
 /** SE ピッチ設定 (1.0=等倍)。 */
 void eng_se_set_pitch(ENG_Audio* a, ENG_SoundID id, float pitch);
 
+/** SE ループ設定。 */
+void eng_se_set_loop(ENG_Audio* a, ENG_SoundID id, bool loop);
+
+/** SE が再生中かどうか。 */
+bool eng_se_is_playing(ENG_Audio* a, ENG_SoundID id);
+
 /** SE 解放。 */
 void eng_se_free(ENG_Audio* a, ENG_SoundID id);
 
@@ -91,6 +97,11 @@ void eng_audio_set_master_volume(ENG_Audio* a, float vol);
 
 /** マスター音量取得。 */
 float eng_audio_get_master_volume(ENG_Audio* a);
+
+/* ── BGM ピッチ ─────────────────────────────────────────*/
+
+/** BGM 再生速度 (ピッチ) 設定: 1.0=等倍, 0.5=半速, 2.0=倍速。 */
+void eng_bgm_set_pitch(ENG_Audio* a, ENG_SoundID id, float pitch);
 
 /* ── フェード ───────────────────────────────────────────*/
 

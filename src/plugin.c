@@ -43,6 +43,7 @@ static Value fn_音楽位置設定(int argc, Value* args)    { eng_bgm_seek(g_a,
 static Value fn_音楽位置取得(int argc, Value* args)    { return NUM(eng_bgm_position(g_a, ARG_INT(0))); }
 static Value fn_音楽再生中(int argc, Value* args)      { return BVAL(eng_bgm_is_playing(g_a, ARG_INT(0))); }
 static Value fn_音楽削除(int argc, Value* args)        { eng_bgm_free(g_a, ARG_INT(0)); return NUL; }
+static Value fn_音楽ピッチ設定(int argc, Value* args)  { eng_bgm_set_pitch(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
 
 /* ── SE ─────────────────────────────────────────────────*/
 static Value fn_SE読込(int argc, Value* args)          { return NUM(eng_se_load(g_a, ARG_STR(0))); }
@@ -51,6 +52,8 @@ static Value fn_SE再生音量(int argc, Value* args)      { eng_se_play_vol(g_a
 static Value fn_SE停止(int argc, Value* args)          { eng_se_stop(g_a, ARG_INT(0)); return NUL; }
 static Value fn_SE音量設定(int argc, Value* args)      { eng_se_set_volume(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
 static Value fn_SEピッチ設定(int argc, Value* args)    { eng_se_set_pitch(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
+static Value fn_SEループ設定(int argc, Value* args)    { eng_se_set_loop(g_a, ARG_INT(0), ARG_B(1)); return NUL; }
+static Value fn_SE再生確認(int argc, Value* args)      { return BVAL(eng_se_is_playing(g_a, ARG_INT(0))); }
 static Value fn_SE削除(int argc, Value* args)          { eng_se_free(g_a, ARG_INT(0)); return NUL; }
 
 /* ── グローバル ─────────────────────────────────────────*/
@@ -89,6 +92,7 @@ static HajimuPluginFunc funcs[] = {
     FN(音楽位置取得, 1, 1),
     FN(音楽再生中,   1, 1),
     FN(音楽削除,     1, 1),
+    FN(音楽ピッチ設定, 2, 2),
     /* SE */
     FN(SE読込,    1, 1),
     FN(SE再生,    1, 1),
@@ -96,6 +100,8 @@ static HajimuPluginFunc funcs[] = {
     FN(SE停止,    1, 1),
     FN(SE音量設定, 2, 2),
     FN(SEピッチ設定, 2, 2),
+    FN(SEループ設定, 2, 2),
+    FN(SE再生確認, 1, 1),
     FN(SE削除,    1, 1),
     /* グローバル */
     FN(主音量設定, 1, 1),
@@ -113,9 +119,9 @@ static HajimuPluginFunc funcs[] = {
 HAJIMU_PLUGIN_EXPORT HajimuPluginInfo* hajimu_plugin_init(void) {
     static HajimuPluginInfo info = {
         .name           = "engine_audio",
-        .version        = "1.1.0",
+        .version        = "1.2.0",
         .author         = "Reo Shiozawa",
-        .description    = "はじむ用オーディオエンジン (miniaudio BGM/SE/フェード/クロスフェード/パン)",
+        .description    = "はじむ用オーディオエンジン (miniaudio BGM/SE/フェード/クロスフェード/パン/ピッチ/ループ)",
         .functions      = funcs,
         .function_count = sizeof(funcs) / sizeof(funcs[0]),
     };
