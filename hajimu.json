@@ -1,0 +1,9 @@
+{
+  "name": "engine_audio",
+  "version": "1.0.0",
+  "description": "はじむ言語用オーディオエンジン (miniaudio — BGM/SE)",
+  "author": "Reo Shiozawa",
+  "license": "MIT",
+  "entry": "engine_audio.hjp",
+  "dependencies": []
+}
