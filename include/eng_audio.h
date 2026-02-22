@@ -98,6 +98,9 @@ void eng_audio_set_master_volume(ENG_Audio* a, float vol);
 /** マスター音量取得。 */
 float eng_audio_get_master_volume(ENG_Audio* a);
 
+/** SE の長さを秒単位で返す */
+float eng_se_duration(ENG_Audio* a, ENG_SoundID id);
+
 /* ── BGM ピッチ ─────────────────────────────────────────*/
 
 /** BGM 再生速度 (ピッチ) 設定: 1.0=等倍, 0.5=半速, 2.0=倍速。 */

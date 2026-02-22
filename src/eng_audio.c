@@ -255,6 +255,15 @@ float eng_bgm_duration(ENG_Audio* a, ENG_SoundID id) {
     return len;
 }
 
+/* ── SE 長さ ─────────────────────────────────────────────*/
+float eng_se_duration(ENG_Audio* a, ENG_SoundID id) {
+    SoundSlot* s = se_slot(a, id);
+    if (!s) return 0.0f;
+    float len = 0.0f;
+    ma_sound_get_length_in_seconds(&s->sound, &len);
+    return len;
+}
+
 /* ── BGM ピッチ ──────────────────────────────────────────*/
 void eng_bgm_set_pitch(ENG_Audio* a, ENG_SoundID id, float pitch) {
     SoundSlot* s = bgm_slot(a, id);

@@ -60,6 +60,13 @@ static Value fn_SE削除(int argc, Value* args)          { eng_se_free(g_a, ARG_
 static Value fn_主音量設定(int argc, Value* args) {
     eng_audio_set_master_volume(g_a, ARG_F(0)); return NUL;
 }
+static Value fn_主音量取得(int argc, Value* args) {
+    (void)argc; (void)args;
+    return NUM(eng_audio_get_master_volume(g_a));
+}
+static Value fn_SE長さ取得(int argc, Value* args) {
+    return NUM(eng_se_duration(g_a, ARG_INT(0)));
+}
 
 /* ── フェード ────────────────────────────────────────────*/
 static Value fn_音楽フェードイン(int argc, Value* args)  { eng_bgm_fade_in(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
@@ -105,6 +112,7 @@ static HajimuPluginFunc funcs[] = {
     FN(SE削除,    1, 1),
     /* グローバル */
     FN(主音量設定, 1, 1),
+    FN(主音量取得, 0, 0),
     /* フェード */
     FN(音楽フェードイン,  2, 2),
     FN(音楽フェードアウト, 2, 2),
@@ -114,12 +122,13 @@ static HajimuPluginFunc funcs[] = {
     FN(SEパン設定,   2, 2),
     /* 長さ */
     FN(音楽長さ取得, 1, 1),
+    FN(SE長さ取得,   1, 1),
 };
 
 HAJIMU_PLUGIN_EXPORT HajimuPluginInfo* hajimu_plugin_init(void) {
     static HajimuPluginInfo info = {
         .name           = "engine_audio",
-        .version        = "1.2.0",
+        .version        = "1.3.0",
         .author         = "Reo Shiozawa",
         .description    = "はじむ用オーディオエンジン (miniaudio BGM/SE/フェード/クロスフェード/パン/ピッチ/ループ)",
         .functions      = funcs,
