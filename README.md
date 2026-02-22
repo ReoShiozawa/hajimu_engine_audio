@@ -21,7 +21,15 @@ BGM ストリーミングと SE インメモリ再生を両立します。
 |---|---|---|
 | miniaudio | オーディオバックエンド | `make vendor` |
 
-## ビルド
+## インストール
+
+### 推奨: はじむパッケージマネージャー
+
+```bash
+hajimu パッケージ 追加 ReoShiozawa/hajimu_engine_audio
+```
+
+### ソースからビルド
 
 ```bash
 git clone https://github.com/ReoShiozawa/hajimu_engine_audio.git
