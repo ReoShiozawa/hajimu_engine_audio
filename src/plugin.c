@@ -58,6 +58,18 @@ static Value fn_主音量設定(int argc, Value* args) {
     eng_audio_set_master_volume(g_a, ARG_F(0)); return NUL;
 }
 
+/* ── フェード ────────────────────────────────────────────*/
+static Value fn_音楽フェードイン(int argc, Value* args)  { eng_bgm_fade_in(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
+static Value fn_音楽フェードアウト(int argc, Value* args){ eng_bgm_fade_out(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
+static Value fn_音楽クロスフェード(int argc, Value* args){ eng_bgm_crossfade(g_a, ARG_INT(0), ARG_INT(1), ARG_F(2)); return NUL; }
+
+/* ── パン ────────────────────────────────────────────────*/
+static Value fn_音楽パン設定(int argc, Value* args) { eng_bgm_set_pan(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
+static Value fn_SEパン設定(int argc, Value* args)   { eng_se_set_pan(g_a, ARG_INT(0), ARG_F(1)); return NUL; }
+
+/* ── 長さ ────────────────────────────────────────────────*/
+static Value fn_音楽長さ取得(int argc, Value* args) { return NUM(eng_bgm_duration(g_a, ARG_INT(0))); }
+
 /* ── プラグイン登録 ─────────────────────────────────────*/
 #define FN(name, mn, mx) { #name, fn_##name, mn, mx }
 
@@ -87,14 +99,23 @@ static HajimuPluginFunc funcs[] = {
     FN(SE削除,    1, 1),
     /* グローバル */
     FN(主音量設定, 1, 1),
+    /* フェード */
+    FN(音楽フェードイン,  2, 2),
+    FN(音楽フェードアウト, 2, 2),
+    FN(音楽クロスフェード, 3, 3),
+    /* パン */
+    FN(音楽パン設定, 2, 2),
+    FN(SEパン設定,   2, 2),
+    /* 長さ */
+    FN(音楽長さ取得, 1, 1),
 };
 
 HAJIMU_PLUGIN_EXPORT HajimuPluginInfo* hajimu_plugin_init(void) {
     static HajimuPluginInfo info = {
         .name           = "engine_audio",
-        .version        = "1.0.0",
+        .version        = "1.1.0",
         .author         = "Reo Shiozawa",
-        .description    = "はじむ用オーディオエンジン (miniaudio BGM/SE)",
+        .description    = "はじむ用オーディオエンジン (miniaudio BGM/SE/フェード/クロスフェード/パン)",
         .functions      = funcs,
         .function_count = sizeof(funcs) / sizeof(funcs[0]),
     };

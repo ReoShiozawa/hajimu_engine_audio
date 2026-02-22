@@ -194,3 +194,55 @@ float eng_audio_get_master_volume(ENG_Audio* a) {
     (void)a;
     return 1.0f;
 }
+
+/* ── フェード ────────────────────────────────────────────*/
+void eng_bgm_fade_in(ENG_Audio* a, ENG_SoundID id, float duration) {
+    SoundSlot* s = bgm_slot(a, id);
+    if (!s) return;
+    ma_uint64 ms = (ma_uint64)(duration * 1000.0f);
+    ma_sound_set_fade_in_milliseconds(&s->sound, 0.0f, 1.0f, ms);
+    ma_sound_start(&s->sound);
+}
+
+void eng_bgm_fade_out(ENG_Audio* a, ENG_SoundID id, float duration) {
+    SoundSlot* s = bgm_slot(a, id);
+    if (!s) return;
+    ma_uint64 ms = (ma_uint64)(duration * 1000.0f);
+    /* -1 は「現在の音量から」を意味する */
+    ma_sound_set_fade_in_milliseconds(&s->sound, -1.0f, 0.0f, ms);
+}
+
+void eng_bgm_crossfade(ENG_Audio* a, ENG_SoundID from_id, ENG_SoundID to_id, float duration) {
+    SoundSlot* from = bgm_slot(a, from_id);
+    SoundSlot* to   = bgm_slot(a, to_id);
+    ma_uint64 ms    = (ma_uint64)(duration * 1000.0f);
+    if (from) {
+        ma_sound_set_fade_in_milliseconds(&from->sound, -1.0f, 0.0f, ms);
+    }
+    if (to) {
+        ma_sound_seek_to_pcm_frame(&to->sound, 0);
+        ma_sound_set_volume(&to->sound, 0.0f);
+        ma_sound_set_fade_in_milliseconds(&to->sound, 0.0f, 1.0f, ms);
+        ma_sound_start(&to->sound);
+    }
+}
+
+/* ── パン ────────────────────────────────────────────────*/
+void eng_bgm_set_pan(ENG_Audio* a, ENG_SoundID id, float pan) {
+    SoundSlot* s = bgm_slot(a, id);
+    if (s) ma_sound_set_pan(&s->sound, pan);
+}
+
+void eng_se_set_pan(ENG_Audio* a, ENG_SoundID id, float pan) {
+    SoundSlot* s = se_slot(a, id);
+    if (s) ma_sound_set_pan(&s->sound, pan);
+}
+
+/* ── BGM 長さ ────────────────────────────────────────────*/
+float eng_bgm_duration(ENG_Audio* a, ENG_SoundID id) {
+    SoundSlot* s = bgm_slot(a, id);
+    if (!s) return 0.0f;
+    float len = 0.0f;
+    ma_sound_get_length_in_seconds(&s->sound, &len);
+    return len;
+}

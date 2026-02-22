@@ -92,6 +92,39 @@ void eng_audio_set_master_volume(ENG_Audio* a, float vol);
 /** マスター音量取得。 */
 float eng_audio_get_master_volume(ENG_Audio* a);
 
+/* ── フェード ───────────────────────────────────────────*/
+
+/**
+ * BGM フェードイン: 音量 0→1 で再生開始。
+ * @param duration  フェード秒数。
+ */
+void eng_bgm_fade_in(ENG_Audio* a, ENG_SoundID id, float duration);
+
+/**
+ * BGM フェードアウト: 現在音量→0。
+ * @param duration  フェード秒数。
+ */
+void eng_bgm_fade_out(ENG_Audio* a, ENG_SoundID id, float duration);
+
+/**
+ * BGM クロスフェード: from をフェードアウトしつつ to をフェードイン。
+ * to は先頭から再生開始される。
+ */
+void eng_bgm_crossfade(ENG_Audio* a, ENG_SoundID from_id, ENG_SoundID to_id, float duration);
+
+/* ── パン (左右定位) ────────────────────────────────────*/
+
+/** BGM パン設定: -1=左, 0=中央, 1=右。 */
+void eng_bgm_set_pan(ENG_Audio* a, ENG_SoundID id, float pan);
+
+/** SE パン設定: -1=左, 0=中央, 1=右。 */
+void eng_se_set_pan(ENG_Audio* a, ENG_SoundID id, float pan);
+
+/* ── BGM 長さ ───────────────────────────────────────────*/
+
+/** BGM の全長 (秒) を返す。取得失敗時は 0。 */
+float eng_bgm_duration(ENG_Audio* a, ENG_SoundID id);
+
 #ifdef __cplusplus
 }
 #endif
