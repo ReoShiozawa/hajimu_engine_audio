@@ -6,5 +6,6 @@
   "license": "MIT",
   "entry": "build/engine_audio.hjp",
   "dependencies": [],
+  "repository": "https://github.com/ReoShiozawa/hajimu_engine_audio",
   "ビルド": "make build/engine_audio.hjp"
 }
